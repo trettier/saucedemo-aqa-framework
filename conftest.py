@@ -1,27 +1,20 @@
 import pytest
-from playwright.sync_api import Browser, Page, sync_playwright
-
-
-YANDEX_BROWSER = r"C:\Program Files\Yandex\YandexBrowser\Application\browser.exe"
+from playwright.sync_api import sync_playwright
 
 
 @pytest.fixture(scope="session")
 def browser():
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(
-            executable_path=YANDEX_BROWSER,
-            headless=False
+            headless=True
         )
-
         yield browser
-
         browser.close()
 
 
 @pytest.fixture
-def page(browser: Browser) -> Page:
+def page(browser):
     page = browser.new_page()
-
+    page.goto("https://www.saucedemo.com")
     yield page
-
     page.close()
