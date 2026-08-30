@@ -20,5 +20,10 @@ class LoginPage:
     def click_login(self):
         self.page.locator(self.LOGIN_BUTTON).click()
 
-    def get_error_message(self):
+    def login(self, username: str, password: str):
+        self.enter_username(username)
+        self.enter_password(password)
+        self.click_login()
+
+    def get_error_message(self) -> str:
         return self.page.locator(self.ERROR_MESSAGE).inner_text()
